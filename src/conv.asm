@@ -75,8 +75,8 @@ toascii macro
                     
             cmp ax,64
             jae cifra3
-            mov al,'0'
-            mov [di],al
+            mov bl,'0'
+            mov [di],bl
             inc di
                     
             jmp cifra2

@@ -5,7 +5,7 @@ almac MACRO
 
     cmp al,'s'
     je saveid
-    jmp exit   
+    jmp bnum   
     
     saveid:
         mov ax,fil
@@ -14,7 +14,7 @@ almac MACRO
         mul bl
         mov di,ax     ; Esta operacion solo me da el numero de fila
 
-        add al,id
+        mov al,id
         add al,30
         mov ids[di],al
 
@@ -25,9 +25,11 @@ almac MACRO
         mov di,ax
 
         xor ax,ax
+        xor si,si
         bucle:
             mov al,auxiliar[si]
             mov labels[di],al
+
             inc di
             inc si
 
@@ -43,13 +45,31 @@ almac MACRO
 
     saver:
         mov ax,fil
-        mov bl,06
+        mov bl,07
         mul bl
         mov di,ax
+
+        ;Salto de linea
+        mov ah,02
+        mov dl,0ah
+        int 21
+
+        print factori
+        mov ah,09
+        mov dx,offset numero
+        int 21
+
+        ;Salto de linea
+        mov ah,02
+        mov dl,0ah
+        int 21
 
         bucle1:
             mov al,numero[si]
             mov valores[di],al
+
+            
+
             inc si
             inc di
 
@@ -57,10 +77,34 @@ almac MACRO
             je finb1
             jmp bucle1
             finb1:
+                inc fil
+                inc id
                 xor ax,ax
                 xor bx,bx
                 xor di,di
                 xor si,si
 
-    exit:
+    ;Borrar arreglo numero
+    bnum:
+        cmp numero[si],'$'
+        je sbnum
+
+        mov numero[si],'$'
+        inc si
+        jmp bnum
+
+        sbnum:
+            xor si,si
+    ;Borrar auxiliar
+    baux:
+        cmp auxiliar[si],'$'
+        je sbaux
+
+        mov auxiliar[si],'$'
+        inc si
+        jmp baux
+
+        sbaux:
+            xor si,si
+            jmp inicio
 ENDM

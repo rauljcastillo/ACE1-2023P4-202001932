@@ -98,10 +98,17 @@ aritmeticas macro
     fin:
         pop ax
         toascii
+        ;Salto de linea
         mov ah,02
         mov dl,0ah
         int 21
+        
         print nameop
         print numero
+
+        ;Salto de linea
+        mov ah,02
+        mov dl,0ah
+        int 21
     aa:
 endm
