@@ -1,0 +1,1 @@
+operacion 1: + * 5 4 - / 7 2 3, operacion 5: * + + * 9 8 * 7 2 * 9 8 9,operacion 6: - * 2 9
